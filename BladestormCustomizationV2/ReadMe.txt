@@ -1,0 +1,1 @@
+﻿Allows customization of Bladestorm attacks.
