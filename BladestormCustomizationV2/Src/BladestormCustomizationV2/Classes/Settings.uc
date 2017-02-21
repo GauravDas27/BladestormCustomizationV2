@@ -5,11 +5,7 @@ function Save()
 	default.ATTACK_TYPE = ATTACK_TYPE;
 	default.ALLOW_CRIT = ALLOW_CRIT;
 	default.AIM_PENALTY = AIM_PENALTY;
-
-	default.TRIGGER_ON_MOVE = TRIGGER_ON_MOVE;
-	default.TRIGGER_ON_ATTACK = TRIGGER_ON_ATTACK;
 	default.TRIGGER_ON_MOVE_AWAY = TRIGGER_ON_MOVE_AWAY;
-
 	default.ATTACK_RANGE = ATTACK_RANGE;
 
 	StaticSaveConfig();
@@ -57,16 +53,6 @@ static function float GetAimPenalty()
 	return FClamp(GetMinAimPenalty(), default.AIM_PENALTY * GetMaxAimPenalty(), GetMaxAimPenalty());
 }
 
-static function bool IsTriggeredOnMove()
-{
-	return default.TRIGGER_ON_MOVE;
-}
-
-static function bool IsTriggeredOnAttack()
-{
-	return default.TRIGGER_ON_ATTACK;
-}
-
 static function bool IsTriggeredOnMoveAway()
 {
 	return default.TRIGGER_ON_MOVE_AWAY;
@@ -107,16 +93,6 @@ function SetCritAllowed(bool CritAllowed)
 function SetAimPenalty(float AimPenalty)
 {
 	AIM_PENALTY = FClamp(0.0f, AimPenalty / GetMaxAimPenalty(), 1.0f);
-}
-
-function SetTriggerOnMove(bool TriggerOnMove)
-{
-	TRIGGER_ON_MOVE = TriggerOnMove;
-}
-
-function SetTriggerOnAttack(bool TriggerOnAttack)
-{
-	TRIGGER_ON_ATTACK = TriggerOnAttack;
 }
 
 function SetTriggerOnMoveAway(bool TriggerOnMoveAway)

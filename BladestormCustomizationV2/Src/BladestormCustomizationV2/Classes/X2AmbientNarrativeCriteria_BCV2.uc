@@ -49,7 +49,7 @@ static function ModifyBladestormAttack()
 	Template = AbilityTemplateManager.FindAbilityTemplate('BladestormAttack');
 
 	ModifyAttack(Template);
-	ModifyTriggers(Template);
+	// ModifyTriggers(Template);
 }
 
 static function ModifyAttack(X2AbilityTemplate Template)
@@ -77,41 +77,6 @@ static function ModifyAttack(X2AbilityTemplate Template)
 
 	ToHitCalc = new class 'X2AbilityToHitCalc_BladestormAttack_BCV2';
 	Template.AbilityToHitCalc = ToHitCalc;
-}
-
-static function ModifyTriggers(X2AbilityTemplate Template)
-{
-	local X2AbilityTrigger_Event Trigger;
-	local X2AbilityTrigger_EventListener EventListener;
-
-	Template.AbilityTriggers.Length = 0;
-	if (class'Settings'.default.TRIGGER_ON_MOVE)
-	{
-		Trigger = new class'X2AbilityTrigger_Event';
-		Trigger.EventObserverClass = class'X2TacticalGameRuleset_MovementObserver';
-		Trigger.MethodName = 'InterruptGameState';
-		Template.AbilityTriggers.AddItem(Trigger);
-		Trigger = new class'X2AbilityTrigger_Event';
-		Trigger.EventObserverClass = class'X2TacticalGameRuleset_MovementObserver';
-		Trigger.MethodName = 'PostBuildGameState';
-		Template.AbilityTriggers.AddItem(Trigger);
-	}
-	if (class'Settings'.default.TRIGGER_ON_ATTACK)
-	{
-		Trigger = new class'X2AbilityTrigger_Event';
-		Trigger.EventObserverClass = class'X2TacticalGameRuleset_AttackObserver';
-		Trigger.MethodName = 'InterruptGameState';
-		Template.AbilityTriggers.AddItem(Trigger);
-	}
-
-	// I couldn't figure out what this trigger does, but it's present in X2Ability_RangerAbilitySet.uc, so I am keeping it
-	EventListener = new class'X2AbilityTrigger_EventListener';
-	EventListener.ListenerData.Deferral = ELD_OnStateSubmitted;
-	EventListener.ListenerData.EventID = 'UnitConcealmentBroken';
-	EventListener.ListenerData.Filter = eFilter_Unit;
-	EventListener.ListenerData.EventFn = class'X2Ability_RangerAbilitySet'.static.BladestormConcealmentListener;
-	EventListener.ListenerData.Priority = 55;
-	Template.AbilityTriggers.AddItem(EventListener);
 }
 
 static function AddStandardAttackTargetConditions(X2AbilityTemplate Template, X2Ability_BCV2 Ability)
