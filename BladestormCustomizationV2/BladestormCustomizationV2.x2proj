@@ -20,14 +20,23 @@
     <Folder Include="Src\ModConfigMenuAPI\Classes" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Config\XComBladestormCustomizationV2.ini">
+    <Content Include="Config\XComBladestormCustomizationV2Defaults.ini">
       <SubType>Content</SubType>
     </Content>
     <Content Include="ReadMe.txt" />
     <Content Include="ModPreview.jpg" />
     <Content Include="Config\XComEditor.ini" />
     <Content Include="Config\XComEngine.ini" />
-    <Content Include="Localization\XComGame.int" />
+    <Content Include="Localization\BladestormCustomizationV2.int" />
+    <Content Include="Src\BladestormCustomizationV2\Classes\Settings.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\BladestormCustomizationV2\Classes\Settings_Defaults.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\BladestormCustomizationV2\Classes\UIScreenListener_MCM_BCV2.uc">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Src\BladestormCustomizationV2\Classes\X2AbilityToHitCalc_BladestormAttack_BCV2.uc">
       <SubType>Content</SubType>
     </Content>

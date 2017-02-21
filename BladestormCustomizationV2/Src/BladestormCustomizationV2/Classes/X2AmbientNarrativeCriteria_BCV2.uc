@@ -1,15 +1,4 @@
-class X2AmbientNarrativeCriteria_BCV2 extends X2AmbientNarrativeCriteria config(BladestormCustomizationV2);
-
-var config bool MOD_ENABLED;
-
-var config bool REACTION_ATTACK;
-var config bool ALLOW_CRIT;
-var config float AIM_PENALTY;
-
-var config bool TRIGGER_ON_MOVE;
-var config bool TRIGGER_ON_ATTACK;
-var config bool TRIGGER_ON_MOVE_AWAY;
-var config int ATTACK_RANGE;
+class X2AmbientNarrativeCriteria_BCV2 extends X2AmbientNarrativeCriteria;
 
 static function array<X2DataTemplate> CreateTemplates()
 {
@@ -21,7 +10,7 @@ static function array<X2DataTemplate> CreateTemplates()
 	local XComGameState_CampaignSettings Settings;
 	local int DifficultyIndex;
 
-	if (!default.MOD_ENABLED)
+	if (class'Settings'.default.MOD_DISABLED)
 	{
 		return Templates;
 	}
@@ -75,24 +64,24 @@ static function ModifyAttack(X2AbilityTemplate Template)
 	// switch from melee to regular single target style and add range based condition
 	Template.AbilityTargetStyle = Ability.GetSimpleSingleTarget();
 	RangeCondition = new class'X2Condition_BladestormRange_BCV2';
-	RangeCondition.CheckAdjacency = default.TRIGGER_ON_MOVE_AWAY;
-	RangeCondition.MaxRange = default.ATTACK_RANGE;
+	RangeCondition.CheckAdjacency = class'Settings'.default.TRIGGER_ON_MOVE_AWAY;
+	RangeCondition.MaxRange = class'Settings'.default.ATTACK_RANGE;
 	Template.AbilityTargetConditions.AddItem(RangeCondition);
 
 	ToHitCalc = new class 'X2AbilityToHitCalc_BladestormAttack_BCV2';
-	ToHitCalc.bReactionFire = default.REACTION_ATTACK;
-	ToHitCalc.bAllowCrit = default.ALLOW_CRIT;
-	if (default.REACTION_ATTACK)
+	ToHitCalc.bReactionFire = class'Settings'.default.REACTION_ATTACK;
+	ToHitCalc.bAllowCrit = class'Settings'.default.ALLOW_CRIT;
+	if (class'Settings'.default.REACTION_ATTACK)
 	{
-		ToHitCalc.ReactionAimPenalty = default.AIM_PENALTY;
+		ToHitCalc.ReactionAimPenalty = class'Settings'.default.AIM_PENALTY;
 		// add overwatch target condition for reaction attacks
 		Template.AbilityTargetConditions.AddItem(class'X2Ability_DefaultAbilitySet'.static.OverwatchTargetEffectsCondition());
 	}
-	else if (default.AIM_PENALTY != 0.0f)
+	else if (class'Settings'.default.AIM_PENALTY != 0.0f)
 	{
 		// we do not set FinalMultiplier when penalty is 0.0f because we do not want user to see
 		// a modifier of -0% if there was ever a way to see bladestorm attack hit chances
-		ToHitCalc.FinalMultiplier = default.AIM_PENALTY;
+		ToHitCalc.FinalMultiplier = class'Settings'.default.AIM_PENALTY;
 	}
 
 	Template.AbilityToHitCalc = ToHitCalc;
@@ -104,7 +93,7 @@ static function ModifyTriggers(X2AbilityTemplate Template)
 	local X2AbilityTrigger_EventListener EventListener;
 
 	Template.AbilityTriggers.Length = 0;
-	if (default.TRIGGER_ON_MOVE)
+	if (class'Settings'.default.TRIGGER_ON_MOVE)
 	{
 		Trigger = new class'X2AbilityTrigger_Event';
 		Trigger.EventObserverClass = class'X2TacticalGameRuleset_MovementObserver';
@@ -115,7 +104,7 @@ static function ModifyTriggers(X2AbilityTemplate Template)
 		Trigger.MethodName = 'PostBuildGameState';
 		Template.AbilityTriggers.AddItem(Trigger);
 	}
-	if (default.TRIGGER_ON_ATTACK)
+	if (class'Settings'.default.TRIGGER_ON_ATTACK)
 	{
 		Trigger = new class'X2AbilityTrigger_Event';
 		Trigger.EventObserverClass = class'X2TacticalGameRuleset_AttackObserver';
