@@ -17,68 +17,72 @@ function Save()
 
 //getters
 
-// returns 0 for reaction attack and 1 for standard attack
-function int GetAttackType()
+static function bool IsReactionAttack()
+{
+	return GetAttackType() == 0;
+}
+
+static function int GetAttackType()
 {
 	return Clamp(0, default.ATTACK_TYPE, 1);
 }
 
-function bool IsCritAllowed()
+static function bool IsCritAllowed()
 {
 	return default.ALLOW_CRIT;
 }
 
-function float GetMinAimPenalty()
+static function float GetMinAimPenalty()
 {
 	return 0.0f;
 }
 
-function float GetMaxAimPenalty()
+static function float GetMaxAimPenalty()
 {
 	return 100.0f;
 }
 
-function float GetAimPenaltyStep()
+static function float GetAimPenaltyStep()
 {
 	return 1.0f;
 }
 
-function float GetAimPenalty()
+static function float GetAimPenalty()
 {
 	return FClamp(GetMinAimPenalty(), default.AIM_PENALTY * GetMaxAimPenalty(), GetMaxAimPenalty());
 }
 
-function bool IsTriggeredOnMove()
+static function bool IsTriggeredOnMove()
 {
 	return default.TRIGGER_ON_MOVE;
 }
 
-function bool IsTriggeredOnAttack()
+static function bool IsTriggeredOnAttack()
 {
 	return default.TRIGGER_ON_ATTACK;
 }
 
-function bool IsTriggeredOnMoveAway()
+static function bool IsTriggeredOnMoveAway()
 {
 	return default.TRIGGER_ON_MOVE_AWAY;
 }
 
-function int GetMinAttackRange()
+static function int GetMinAttackRange()
 {
 	return 1;
 }
 
-function int GetMaxAttackRange()
+static function int GetMaxAttackRange()
 {
 	return 10;
 }
 
-function int GetAttackRangeStep()
+static function int GetAttackRangeStep()
 {
 	return 1;
 }
 
-function int GetAttackRange()
+static function int GetAttackRange()
 {
 	return Clamp(GetMinAttackRange(), default.ATTACK_RANGE, GetMaxAttackRange());
 }
