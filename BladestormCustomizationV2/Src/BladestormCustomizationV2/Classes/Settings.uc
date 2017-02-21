@@ -65,7 +65,7 @@ static function int GetMinAttackRange()
 
 static function int GetMaxAttackRange()
 {
-	return 10;
+	return 12;
 }
 
 static function int GetAttackRangeStep()

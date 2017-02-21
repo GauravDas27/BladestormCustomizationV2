@@ -44,9 +44,9 @@ simulated function ClientModCallback(MCM_API_Instance ConfigAPI, int GameMode)
 	GroupDefault = Page.AddGroup('GroupDefault', GroupDefaultLabel);
 	GroupDefault.AddDropdown('AttackType', AttackTypeLabel, AttackTypeTooltip, AttackTypeOptions, AttackTypeOptions[Settings.GetAttackType()], AttackTypeSaveHandler);
 	GroupDefault.AddCheckbox('AllowCrit', AllowCritLabel, AllowCritTooltip, Settings.IsCritAllowed(), AllowCritSaveHandler);
-	GroupDefault.AddSlider('AimPenalty', AimPenaltyLabel, AimPenaltyTooltip, Settings.GetMinAimPenalty(), Settings.GetMaxAimPenalty(), Settings.GetAimPenaltyStep(), Settings.GetAimPenalty(), AimPenaltySaveHandler);
 	GroupDefault.AddCheckbox('TriggerOnMoveAway', TriggerOnMoveAwayLabel, TriggerOnMoveAwayTooltip, Settings.isTriggeredOnMoveAway(), TriggerOnMoveAwaySaveHandler);
 	GroupDefault.AddSlider('AttackRange', AttackRangeLabel, AttackRangeTooltip, Settings.GetMinAttackRange(), Settings.GetMaxAttackRange(), Settings.GetAttackRangeStep(), Settings.GetAttackRange(), AttackRangeSaveHandler);
+	GroupDefault.AddSlider('AimPenalty', AimPenaltyLabel, AimPenaltyTooltip, Settings.GetMinAimPenalty(), Settings.GetMaxAimPenalty(), Settings.GetAimPenaltyStep(), Settings.GetAimPenalty(), AimPenaltySaveHandler);
 
 	Page.ShowSettings();
 }
