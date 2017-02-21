@@ -1,4 +1,6 @@
-class X2AmbientNarrativeCriteria_BCV2 extends X2AmbientNarrativeCriteria;
+class X2AmbientNarrativeCriteria_BCV2 extends X2AmbientNarrativeCriteria config(BladestormCustomizationV2Defaults);
+
+var config bool MOD_DISABLED;
 
 static function array<X2DataTemplate> CreateTemplates()
 {
@@ -10,8 +12,9 @@ static function array<X2DataTemplate> CreateTemplates()
 	local XComGameState_CampaignSettings Settings;
 	local int DifficultyIndex;
 
-	if (class'Settings'.default.MOD_DISABLED)
+	if (default.MOD_DISABLED)
 	{
+		`log("BCV2: mod disabled");
 		return Templates;
 	}
 
@@ -69,9 +72,9 @@ static function ModifyAttack(X2AbilityTemplate Template)
 	Template.AbilityTargetConditions.AddItem(RangeCondition);
 
 	ToHitCalc = new class 'X2AbilityToHitCalc_BladestormAttack_BCV2';
-	ToHitCalc.bReactionFire = class'Settings'.default.REACTION_ATTACK;
+	ToHitCalc.bReactionFire = class'Settings'.default.ATTACK_TYPE == 0;
 	ToHitCalc.bAllowCrit = class'Settings'.default.ALLOW_CRIT;
-	if (class'Settings'.default.REACTION_ATTACK)
+	if (class'Settings'.default.ATTACK_TYPE == 0)
 	{
 		ToHitCalc.ReactionAimPenalty = class'Settings'.default.AIM_PENALTY;
 		// add overwatch target condition for reaction attacks
