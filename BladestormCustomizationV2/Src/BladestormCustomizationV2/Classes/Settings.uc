@@ -47,6 +47,11 @@ static function float GetAimPenaltyStep()
 	return 1.0f;
 }
 
+static function float GetAimPenaltyDecimal()
+{
+	return FClamp(0.0f, default.AIM_PENALTY, 1.0f);
+}
+
 static function float GetAimPenalty()
 {
 	return FClamp(GetMinAimPenalty(), default.AIM_PENALTY * GetMaxAimPenalty(), GetMaxAimPenalty());
@@ -101,7 +106,7 @@ function SetCritAllowed(bool CritAllowed)
 
 function SetAimPenalty(float AimPenalty)
 {
-	AIM_PENALTY = FClamp(GetMinAimPenalty(), AimPenalty, GetMaxAimPenalty()) / 100.0f;
+	AIM_PENALTY = FClamp(0.0f, AimPenalty / GetMaxAimPenalty(), 1.0f);
 }
 
 function SetTriggerOnMove(bool TriggerOnMove)

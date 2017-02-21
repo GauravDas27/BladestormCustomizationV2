@@ -49,6 +49,9 @@
     <Content Include="Src\BladestormCustomizationV2\Classes\X2Condition_BladestormRange_BCV2.uc">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Src\BladestormCustomizationV2\Classes\X2Condition_ReactionExclusion_BCV2.uc">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Src\ModConfigMenuAPI\Classes\MCM_API.uc">
       <SubType>Content</SubType>
     </Content>

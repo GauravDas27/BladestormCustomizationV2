@@ -56,6 +56,7 @@ static function ModifyAttack(X2AbilityTemplate Template)
 {
 	local X2Ability_BCV2 Ability;
 	local X2Condition_BladestormRange_BCV2 RangeCondition;
+	local X2Condition_ReactionExclusion_BCV2 ReactionCondition;
 	local X2AbilityToHitCalc_BladestormAttack_BCV2 ToHitCalc;
 
 	Ability = new class'X2Ability_BCV2';
@@ -67,26 +68,14 @@ static function ModifyAttack(X2AbilityTemplate Template)
 	// switch from melee to regular single target style and add range based condition
 	Template.AbilityTargetStyle = Ability.GetSimpleSingleTarget();
 	RangeCondition = new class'X2Condition_BladestormRange_BCV2';
-	RangeCondition.CheckAdjacency = class'Settings'.default.TRIGGER_ON_MOVE_AWAY;
-	RangeCondition.MaxRange = class'Settings'.default.ATTACK_RANGE;
 	Template.AbilityTargetConditions.AddItem(RangeCondition);
 
-	ToHitCalc = new class 'X2AbilityToHitCalc_BladestormAttack_BCV2';
-	ToHitCalc.bReactionFire = class'Settings'.default.ATTACK_TYPE == 0;
-	ToHitCalc.bAllowCrit = class'Settings'.default.ALLOW_CRIT;
-	if (class'Settings'.default.ATTACK_TYPE == 0)
-	{
-		ToHitCalc.ReactionAimPenalty = class'Settings'.default.AIM_PENALTY;
-		// add overwatch target condition for reaction attacks
-		Template.AbilityTargetConditions.AddItem(class'X2Ability_DefaultAbilitySet'.static.OverwatchTargetEffectsCondition());
-	}
-	else if (class'Settings'.default.AIM_PENALTY != 0.0f)
-	{
-		// we do not set FinalMultiplier when penalty is 0.0f because we do not want user to see
-		// a modifier of -0% if there was ever a way to see bladestorm attack hit chances
-		ToHitCalc.FinalMultiplier = class'Settings'.default.AIM_PENALTY;
-	}
+	// add overwatch target condition for reaction attacks
+	ReactionCondition = new class'X2Condition_ReactionExclusion_BCV2';
+	ReactionCondition.OverwatchExclusion = class'X2Ability_DefaultAbilitySet'.static.OverwatchTargetEffectsCondition();
+	Template.AbilityTargetConditions.AddItem(ReactionCondition);
 
+	ToHitCalc = new class 'X2AbilityToHitCalc_BladestormAttack_BCV2';
 	Template.AbilityToHitCalc = ToHitCalc;
 }
 
